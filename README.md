@@ -445,9 +445,9 @@ As part of the assignment created a Deep Q learning framework using pytorch for 
 
 ## Week 6
 ### Policy Gradient Methods
-#### Trust Region Policy Optimization (TRPO)
-
-#### 1. Proximal Policy Optimization (PPO)
+#### 1. Trust Region Policy Optimization (TRPO)
+TRPO is a policy gradient RL method here we parametrize the policy and use a neural network to 
+#### 2. Proximal Policy Optimization (PPO)
 
 
 
