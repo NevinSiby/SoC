@@ -59,7 +59,7 @@ pygame.time.Clock() is used to control frame rate and game speed.
 #### Game Loop
 Core of any game: continuously processes input, updates state, and renders output. This s usually run in a fixed fps(frames per second)
 
-As an assignment, I have made a snake game using pygame. The code for the same is included in the repository under file name 'snake.py'
+As an assignment, I have made a snake game using pygame. The code for the same is included in the repository under file name [snake.py](.'
 
 ## Weeks 2:
 ### Neural Networks
@@ -114,7 +114,7 @@ CNNs typically use ReLU activations, pooling layers, and finally fully connected
 
 > Also I learnt to implement this in Pytorch
 
-As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are included in this repository in the folder 'MNIST Classification'.
+As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are included in this repository in the folder [MNIST Classification](./MNIST Classification/).
 
 ## Week 3
 ### Reinforcement Learning (RL)
@@ -422,3 +422,36 @@ Aₜ = arg maxₐ Q(a) + √(-log p/ 2Nₜ(a))
 
 where Uₜ = √(-log p/ 2Nₜ(a)) (This is obtaned by Hoeffding's inequality')
 ```
+## Week 4
+### Implementing Q-Learning using Pytorch / Tensorflow
+Pytorch and Tensorflow are two python modules which is widely used to implement deep-learning framework. These modules provide robust tools for learning methods for implementing learning methods. Using PyTorch, we gain full control over the learning process due to its dynamic computation graph and intuitive debugging capabilities. In contrast, TensorFlow—particularly in its high-level APIs like Keras—offers a more abstracted interface, which simplifies implementation but provides comparatively less flexibility for low-level customization. So pytorch is suitable if you want full control over the learnng framework and tensorflow if you want basic learning models. 
+So the basic algorithm for Q-table learning :
+ - Discretize the observation space.
+ - Initialize a Q-table with size [Discretized observation space size, action space cardinality]
+ - Training loop:
+    * Play the action corresponds to argmax(Q_table[state]) with a probability (1 - ε), or a random action with a probability, ε (ε decreases over episodes)
+    * Using the reward obtained, update Q_table[state], with ```r + γ*Q_table[state]```
+    * And repeat the process for many episodes
+As part of the assignment created a Q-table learning framework using pytorch for the snake game developed in first week assignment. The file [Q-Learning.py](./Q-Learning/Q-learning.py) is in the folder [Q-Learning](./Q-Learning/)
+## Week 5
+### Deep Q-Learning (DQN)
+Here, we use neural networks to determine the acion tha has to be done. This was developed because fr complex environments, the cardinality of observation space shoots up essentially making q-table to be of huge size. So to reduce computatonal costs, we could use a neural network, where input layer is observation space and output layer is Q_values for the action space. We can either use a covolutional neural network for the input layer and after 1-2 layers, flatten the layer and  use linear neural network for subsequent layers. And for exploration, we follow ε-greedy strategy, where ε decreases over episodes. Here the updation per step is too small compared to Q-table learning so we are adjusting based on multiple timesteps at the same time. For this we will create a replay buffer, ```R = [s, a, s', r]```, where
+ - ```s is current state.```
+ - ```a is action we took at state s.```
+ - ```s' is state we reached after playing this action.```
+ - ```r is reward obtained.```
+So after a point when cardinality of Replay buffer > n, we sample a subset from this buffer which exactly has n random elements from this buffer, and we train the neural network using this random subset of buffer. This is so much better than training the neural network with just one element of this buffer.
+As part of the assignment created a Deep Q learning framework using pytorch for the snake game developed in first week assignment. The file [DQN.py](./Q-Learning/DQN.py) is in the folder [Q-Learning](./Q-Learning/). Also created a report [QandDQN.pdf](./Q-Learning/QandDQN.pdf), which compares the classical Q-table learning approach from the previous assignment with the Deep Q-Network framework introduced in this one.
+
+## Week 6
+### Policy Gradient Methods
+#### Trust Region Policy Optimization (TRPO)
+
+#### 1. Proximal Policy Optimization (PPO)
+
+
+
+
+
+
+
