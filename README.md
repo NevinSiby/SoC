@@ -500,10 +500,11 @@ A_t = \delta_t + (\gamma \lambda) \delta_{t+1} + (\gamma \lambda)^2 \delta_{t+2}
  \text{with } \quad \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)
 ```
 ## Week 7 and Week 8
+### Final project
+Trained a PPO  agent to solve the CarRacing-v3 environment using visual input. The goal is to develop an agent that can complete laps efficiently using image-based reinforcement learning. 
 
+CarRacing-v3 is an environment developed by OpenAI as part of its Gym toolkit, designed to benchmark and standardize reinforcement learning (RL) methods (like Q-learning, DQN, PPO, etc). Prior to such environments, there was no consistent framework for evaluating RL methods. OpenAI’s standardized environments like CarRacing-v3, CartPole,etc... have played a crucial role in making RL research reproducible, comparable, and scalable.
 
-
-
-
+I used stable baselines module mainly to create this agent. The code for the same, a brief report and some training videos at steps 2000, 60000, 80000 and 100000 are in the [PPO](./PPO/) directory.
 
 
