@@ -59,7 +59,7 @@ pygame.time.Clock() is used to control frame rate and game speed.
 #### Game Loop
 Core of any game: continuously processes input, updates state, and renders output. This s usually run in a fixed fps(frames per second)
 
-As an assignment, I have made a snake game using pygame. The code for the same is included in the repository under file name [snake.py](.'
+As an assignment, I have made a snake game using pygame. The code for the same is included in the repository under file name [snake.py](./snake.py)
 
 ## Weeks 2:
 ### Neural Networks
@@ -119,7 +119,7 @@ CNNs typically use ReLU activations, pooling layers, and finally fully connected
 
 > Also I learnt to implement this in Pytorch
 
-As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are included in this repository in the folder [MNIST Classification](./MNIST Classification/).
+As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are included in this repository in the folder [MNIST Classification](./MNIST%20Classification/).
 
 ## Week 3
 ### Reinforcement Learning (RL)
