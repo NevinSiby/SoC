@@ -119,7 +119,7 @@ CNNs typically use ReLU activations, pooling layers, and finally fully connected
 
 > Also I learnt to implement this in Pytorch
 
-As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are included in this repository in the folder [MNIST Classification](./MNIST%20Classification/).
+As part of the assignment, also prepared a brief report documenting the architecture, training results, and key observations from the implementation. The full code and report are available in the [MNIST Classification](./MNIST%20Classification/) directory. 
 
 ## Week 3
 ### Reinforcement Learning (RL)
@@ -453,7 +453,7 @@ So the basic algorithm for Q-table learning :
     * Play the action corresponds to argmax(Q_table[state]) with a probability (1 - ε), or a random action with a probability, ε (ε decreases over episodes)
     * Using the reward obtained, update Q_table[state], with ```r + γ*Q_table[state]```
     * And repeat the process for many episodes
-As part of the assignment created a Q-table learning framework using pytorch for the snake game developed in first week assignment. The file [Q-Learning.py](./Q-Learning/Q-learning.py) is in the folder [Q-Learning](./Q-Learning/)
+As part of the assignment created a Q-table learning framework using pytorch for the snake game developed in first week assignment. The file [Q-Learning.py](./Q-Learning/Q-learning.py) is in the [Q-Learning](./Q-Learning/) directory.
 ## Week 5
 ### Deep Q-Learning (DQN)
 Here, we use neural networks to determine the acion tha has to be done. This was developed because fr complex environments, the cardinality of observation space shoots up essentially making q-table to be of huge size. So to reduce computatonal costs, we could use a neural network, where input layer is observation space and output layer is Q_values for the action space. We can either use a covolutional neural network for the input layer and after 1-2 layers, flatten the layer and  use linear neural network for subsequent layers. And for exploration, we follow ε-greedy strategy, where ε decreases over episodes. Here the updation per step is too small compared to Q-table learning so we are adjusting based on multiple timesteps at the same time. For this we will create a replay buffer, ```R = [s, a, s', r]```, where
@@ -462,7 +462,7 @@ Here, we use neural networks to determine the acion tha has to be done. This was
  - ```s' is state we reached after playing this action.```
  - ```r is reward obtained.```
 So after a point when cardinality of Replay buffer > n, we sample a subset from this buffer which exactly has n random elements from this buffer, and we train the neural network using this random subset of buffer. This is so much better than training the neural network with just one element of this buffer.
-As part of the assignment created a Deep Q learning framework using pytorch for the snake game developed in first week assignment. The file [DQN.py](./Q-Learning/DQN.py) is in the folder [Q-Learning](./Q-Learning/). Also created a report [QandDQN.pdf](./Q-Learning/QandDQN.pdf), which compares the classical Q-table learning approach from the previous assignment with the Deep Q-Network framework introduced in this one.
+As part of the assignment created a Deep Q learning framework using pytorch for the snake game developed in first week assignment. The file [DQN.py](./Q-Learning/DQN.py) is in the [Q-Learning](./Q-Learning/) directory. Also created a report [QandDQN.pdf](./Q-Learning/QandDQN.pdf), which compares the classical Q-table learning approach from the previous assignment with the Deep Q-Network framework introduced in this one.
 
 ## Week 6
 ### Policy Gradient Methods
