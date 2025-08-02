@@ -68,8 +68,8 @@ A Neural Network (NN) is a computational model inspired by the human brain, used
 Neurons basically takes input from the previous layer and spits out as a scalar.
 #### Linear Neural Network
 In a linear neural network, each neuron performs a weighted sum of its inputs and adds a bias:
-```text
-a = w · x + b
+```math
+a = w \cdot x + b
 ```
 - a: input vector (previous layer)
 - w: weight matrix
@@ -81,27 +81,32 @@ If no activation functions are used between layers, then composing multiple laye
 
 **Activation function** : An activation function is applied to the output of each neuron to introduce non-linearity into the network. Without it, even deep networks would behave like a linear model. It "squishes" the neuron's output (a scalar) to a desired range and enables the model to learn complex, non-linear patterns.
 
-```text
-Sigmoid:
-σ(x) = 1 / (1 + e^(−x))
-ReLU (Rectified Linear Unit):
-ReLU(x) = max(0, x)
-Tanh (Hyperbolic Tangent):
-tanh(x) = (e^x − e^(−x)) / (e^x + e^(−x))
+```math
+\text{Sigmoid:}\: \sigma(x) = \frac{1}{1 + e^{−x}}
+```
+```math
+\text{ReLU (Rectified Linear Unit):}\: ReLU(x) = \max(0, x)
+```
+```math
+\text{Tanh (Hyperbolic Tangent):} \: tanh(x) = \frac{e^x − e^{−x}}{e^x + e^{−x}}
 ```
 #### Cost Function
 Cost is sum of square of difference between required output and output our neural network give. This is used in learning. Cost function should be minimised for an accurate neural network.
 #### Backtracking
 We find the gradient of Codt function with respect to w and b and subtract w and b by learning rate ∙ (- grad). By this, the cost function decreases over and over while we inputting test dataset. This is called **backtracking** because we're moving backwards as we find the output first and then readjust the weights and biases.
 
-```text
-w ← w − ɑ · ∂C/∂w  
-b ← b − ɑ · ∂C/∂b
+```math
+w \leftarrow w − \alpha \cdot \frac{\partial C}{\partial w}
 ```
-ɑ is learning rate and C is the cost function
+```math
+b \leftarrow b − \alpha \cdot \frac{\partial C}{\partial b}
+```
+```math
+\alpha \: \text{ is learning rate and C is the cost function}
+```
 #### Convolutional Neural Network
 This is used when we need to recognise images and neurons are here pixels. So it's 2 dimensional
-```text
+```math
 a = w * x + b
 ```
 - x: input image or feature map (2D)
@@ -151,15 +156,15 @@ There are two main types of value functions:
 - **State Value Function** `V(s)`  
   The expected return when starting from state `s` and following a policy `π` thereafter.  
   Mathematically:  
-    ```text
-  V(s) = E[ Gₜ | sₜ = s ] = Rₜ + γ · Rₜ₊₁ + γ² · Rₜ₊₂ + γ³ · Rₜ₊₃ + ... = E_π [ ∑ γᵏ · rₜ₊ₖ₊₁ | sₜ = s ]
+  ```math
+  V(s) = \mathbb{E}_\pi[ G_t | s_t = s ] = R_t + \gamma \cdot R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots = \mathbb{E}_\pi \left[ \sum_k \gamma^k · r_{t+k} | s_t = s \right]
   ```
 
 - **Action Value Function** `Q(s, a)`  
   The expected return when starting from state `s`, taking action `a`, and then following policy `π`.  
   Mathematically:
-  ```text
-  Q(s, a) = E[ Gₜ | sₜ = s, aₜ = a ] = Rₜ + γ · Rₜ₊₁ + γ² · Rₜ₊₂ + γ³ · Rₜ₊₃ + ...= E_π [ ∑ γᵏ · rₜ₊ₖ₊₁ | sₜ = s, aₜ = a ]
+  ```math
+   Q(s,a) = \mathbb{E}_\pi[ G_t | s_t = s, a_t = a ] = R_t + \gamma \cdot R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots = \mathbb{E}_\pi \left[ \sum_k \gamma^k · r_{t+k}  | s_t = s, a_t = a \right]
   ```
 
 Where:
@@ -171,20 +176,24 @@ Value functions are central to many reinforcement learning algorithms — they g
 These are computed using the **Bellman equations**, which break down future rewards recursively.
 ### Bellmann equation
 For State value function
-```text
-V(s) = E[ Gₜ | sₜ = s ]
-     = Rₜ + γ · Rₜ₊₁ + γ² · Rₜ₊₂ + γ³ · Rₜ₊₃ + ...
-     = Rₜ + γ · (Rₜ₊₁ + γ · Rₜ₊₂ + γ² · Rₜ₊₃) + ...
-     = Rₜ + γ · V(sₜ₊₁)
-     = E[ Rₜ + γ · V(sₜ₊₁) | sₜ = s ]
+```math
+\begin{align*}
+V(s) &= E[ G_t | s_t = s ] \\
+     &= R_t + \gamma \cdot R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots \\
+     &= R_t + \gamma \cdot (R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots) \\
+     &= R_t + \gamma \cdot V(s_{t+1}) \\
+     &= \mathbb{E}[ R_t + \gamma \cdot V(s_{t+1}) | s_t = s ]
+\end{align*}
 ```
-For Action value function
-```text
-Q(s, a) = E[ Gₜ | sₜ = s, aₜ = a ]
-        = Rₜ + γ · Rₜ₊₁ + γ² · Rₜ₊₂ + γ³ · Rₜ₊₃ + ...
-        = Rₜ + γ · (Rₜ₊₁ + γ · Rₜ₊₂ + γ² · Rₜ₊₃) + ...
-        = Rₜ + γ · Q(sₜ₊₁, aₜ₊₁)
-        = E[ Rₜ + γ · Q(sₜ₊₁, aₜ₊₁) | sₜ = s, aₜ = a ]
+For Action value function, 
+```math
+\begin{align*}
+Q(s, a) &= E[ G_t | s_t = s , a_t = a] \\
+     &= R_t + \gamma \cdot R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots \\
+     &= R_t + \gamma \cdot (R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots) \\
+     &= R_t + \gamma \cdot Q(s_{t+1}, a_{t+1}) \\
+     &= \mathbb{E}[ R_t + \gamma \cdot Q(s_{t+1}) | s_t = s, a_t = a ]
+\end{align*}
 ```
 ### Dynamic Programming (DP)
 Dynamic Programming is a class of algorithms used to compute value functions and derive optimal policies in reinforcement learning, assuming full knowledge of the environment's dynamics (i.e., the transition probabilities and reward function).
@@ -192,15 +201,15 @@ DP solves problems recursively using the **Bellman equations** and relies on two
 
 #### Policy Evaluation
 Estimate the value function `V(s)` for a fixed policy π:
-```text
-V(s) = E_π [ Rₜ + γ · V(sₜ₊₁) | sₜ = s ]
+```math
+V(s) = \mathbb{E}_\pi [ R_t + \gamma \cdot V(s_{t+1}) | s_t = s ]
 ```
 
 #### Policy Improvement
 Improve the policy by acting greedily with respect to `Q(s, a)`:
 
-```text
-π'(s) = argmaxₐ Q(s, a)
+```math
+\pi '(s) = \arg \max_a Q(s, a)
 ```
 
 If you alternate between policy evaluation and policy improvement, you get **Policy Iteration**. If you combine both steps into one, you get **Value Iteration**.
@@ -215,20 +224,23 @@ To estimate the action-value function `Q(s, a)`, the algorithm maintains:
 - A cumulative return for each `(s, a)`
 - The estimate is updated as:
 
-```text
-Q(s, a) ← Q(s, a) + (1 / N(s, a)) · [ Gₜ - Q(s, a) ]
-In Monte-Carlo,
- Gₜ = Rₜ + γ · Rₜ₊₁ + γ² · Rₜ₊₂ + γ³ · Rₜ₊₃ + ...
+```math
+Q(s, a) \leftarrow Q(s, a) + \frac{1}{N(s, a)} \cdot [ G_t - Q(s, a) ]
 ```
-
+In Monte-Carlo,
+```math
+ G_t = R_t + \gamma \cdot R_{t+1} + \gamma^2 \cdot R_{t+2} + \gamma^3 \cdot R_{t+3} + \dots
+```
 #### Policy Improvement
 
 Once `Q(s, a)` estimates are updated from experience, the policy can be improved using an **ε-greedy strategy** to balance **exploration** and **exploitation**:
 
-```text
-π(s) = 
-    with probability 1 - ε → argmaxₐ Q(s, a)  (greedy action)
-    with probability ε     → random action from action space
+```math
+\pi(s) = 
+\begin{cases}
+\arg\max_a Q(s, a) & \rightarrow \text{with probability } 1 - \epsilon  \quad \text{(greedy action)} \\
+\text{random action from action space}  & \rightarrow \text{with probability } \epsilon 
+\end{cases}
 ```
 
 - `ε ∈ [0, 1]` controls the exploration rate.
@@ -248,8 +260,8 @@ Once `Q(s, a)` estimates are updated from experience, the policy can be improved
 TD(0) methods are **model-free reinforcement learning algorithms** that learn from **each step** in an episode — they do **not need to wait for the episode to end**. Unlike Monte Carlo methods, TD(0) **does use bootstrapping and the Bellman equation** for learning.
 #### Policy Evaluation
 To estimate the **action-value function** `Q(s, a)`, the TD(0) update rule is:
-```text
-Q(s, a) ← Q(s, a) + α · [ r + γ · Q(s', a') - Q(s, a) ]
+```math
+Q(s, a) \leftarrow Q(s, a) + \alpha \cdot [ r + \gamma \cdot Q(s', a') - Q(s, a) ]
 ```
 
 Where:
@@ -262,10 +274,12 @@ Where:
 >  This is a **one-step update**, using the current reward and the estimate of the next state's value.
 #### Policy Improvement
 Once `Q(s, a)` estimates are updated from experience, the policy can be improved using an **ε-greedy strategy** to balance **exploration** and **exploitation**:
-```text
-π(s) = 
-    with probability 1 - ε → argmaxₐ Q(s, a)  (greedy action)
-    with probability ε     → random action from action space
+```math
+\pi(s) = 
+\begin{cases}
+\arg\max_a Q(s, a) & \rightarrow \text{with probability } 1 - \epsilon  \quad \text{(greedy action)} \\
+\text{random action from action space}  & \rightarrow \text{with probability } \epsilon 
+\end{cases}
 ```
 
 - `ε ∈ [0, 1]` controls the exploration rate.
@@ -283,18 +297,23 @@ TD(λ) uses **eligibility traces** to assign credit to recently visited state-ac
 
 The forward view is a **theoretical formulation** that defines the return as a **weighted average of n-step returns**:
 
-```text
-G¹ = rₜ + γ · Q(sₜ₊₁, aₜ₊₁)
-G² = rₜ + γ · rₜ₊₁ + γ² · Q(sₜ₊₂, aₜ₊₂)
-G³ = rₜ + γ · rₜ₊₁ + γ² · rₜ₊₂ + γ³ · Q(sₜ₊₃, aₜ₊₃)
-...
+```math
+G^1 = r_t + \gamma \cdot Q(s_{t+1}, a_{t+1})
+```
+```math
+G^2 = r_t + \gamma \cdot r_{t+1} + \gamma^2 \cdot Q(s_{t+2}, a_{t+2})
+```
+```math
+G^3 = r_t + \gamma \cdot r_{t+1} + \gamma^2 \cdot r_{t+2} + \gamma^3 \cdot Q(s_{t+3}, a_{t+3})
+```
 The λ-return is then given by:
 
-```text
-G_λ = (1 - λ) · G¹ + λ(1 - λ) · G² + λ²(1 - λ) · G³ + ... + λⁿ⁻¹(1 - λ) · G⁽ⁿ⁾ + ...
-     = (1 - λ) ∑ₙ₌₁^∞ λⁿ⁻¹ · G⁽ⁿ⁾
-
-Q(s, a) ← Q(s, a) + α · [ G_λ - Q(s, a) ]
+```math
+G_\lambda = (1 - \lambda) \cdot G^1 + \lambda(1 - \lambda) \cdot G^2 + \lambda^2(1 - \lambda) \cdot G^3 + \dots + \lambda_{n-1}(1 - \lambda) \cdot G^n + \dots
+     = (1 - \lambda) \sum_{ₙ₌₁}^\infty \lambda^{n-1} \cdot G^n
+```
+```math
+Q(s, a) \leftarrow Q(s, a) + \alpha \cdot [ G_\lambda - Q(s, a) ]
 ```
 Where `Gⁿ` is the n-step return.
 
@@ -305,15 +324,15 @@ The backward view is the **practical implementation** used in online algorithms.
 
 Update rule:
 
-```text
-Q(s, a) ← Q(s, a) + α · δₜ · e(s, a)
+```math
+Q(s, a) \leftarrow Q(s, a) + \alpha · \delta_t · e(s, a)
 ```
 
 Where:
 - `δₜ = r + γ · Q(s', a') - Q(s, a)` is the TD error
 - `e(s, a)` is the **eligibility trace**, updated as:
-  ```text
-  e(s, a) ← γ · λ · e(s, a)
+  ```math
+  e(s, a) \leftarrow \gamma \cdot \lambda \cdot e(s, a)
   ```
 
 This approach allows the algorithm to assign partial credit to all past actions, decaying over time based on λ and γ.
@@ -342,18 +361,17 @@ Unlike SARSA, Q-learning does **not use the action actually taken** in the next 
 Earlier we found optima policy by optimising value function. This is the method when we directly parametrize policy and optimise it. It has better convergence properties, can learn stochastic policies. But it has a disadvantage that it has high varience when evaluating a policy.
 #### REINFORCE Algorithm
 REINFORCE is a fundamental **policy gradient algorithm** that optimizes a parameterized policy using sampled returns from complete episodes. The objective is to **maximize the expected return**:
-```text
-J(θ) = E_πθ [ Gₜ ]
+```math
+J(\theta) = \mathbb{E}_{\pi_\theta} [ G_t ]
 ```
 J(θ) is the policy objective function. θ is the parameter of the policy.
 Using the **likelihood ratio trick** ```(multiply and divide by the policy)``` , the gradient of the objective becomes:
 
-```text
-∇π_θ(aₜ | sₜ) = (∇π_θ(aₜ | sₜ)/π_θ(aₜ | sₜ)) · π_θ(aₜ | sₜ)
-             = ∇θ log π_θ(aₜ | sₜ)  · π_θ(aₜ | sₜ)
-
-
-∇θ J(θ) = E_πθ [ ∇θ log π_θ(aₜ | sₜ) · Gₜ ]
+```math
+\nabla \pi_\theta(a_t \mid s_t) = \left( \frac{\nabla \pi_\theta(a_t \mid s_t)}{\pi_\theta(a_t \mid s_t)} \right) \cdot \pi_\theta(a_t \mid s_t) = \nabla_\theta \log \left(\pi_\theta(a_t \mid s_t) \right) \cdot \pi_\theta(a_t \mid s_t)
+```
+```math
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \left(\pi_\theta(a_t \mid s_t)\right) \cdot G_t \right]
 ```
 Then we adjust the parameter θ to improve the policy
 Where:
@@ -369,9 +387,11 @@ It is a method for policy optimisation. It has two parts:
 ### Model Based RL
 Model is a representation of MDP using a parameter ɳ. We will assume State space and Action space as already known and representtion state is M = <P_ɳ,R_ɳ>.
 
-```text
-Sₜ₊₁ ~ P_ɳ(Sₜ₊₁|Sₜ,Aₜ)
-Rₜ₊₁ = R_ɳ(Rₜ₊₁|Sₜ,Aₜ)
+```math
+S_{t+1} \approx P_\eta(S_{t+1}|S_t,A_t)
+```
+```math
+R_{t+1} = R_\eta(R_{t+1}|S_t,A_t)
 ```
 One of the Model-based algorithm is **Dyna-Q** algorithm
 #### Dyna Q algorithm
@@ -398,11 +418,11 @@ Imagine a slot machine (a "bandit") with multiple arms, each providing a differe
 The agent’s goal is to **maximize cumulative reward** over time by choosing which arms to pull. 
 
 **Regret** : Opportunity loss for one step. 
-```text
-Iₜ = 𝔼[v* − q(Aₜ)]
+```math
+I_t = \mathbb{E}[v^* − q(A_t)]
 
 ```
-> *So, Maximise cumulative value = Minimise cumulative regret*
+> **So, Maximise cumulative value = Minimise cumulative regret**
 
 There is:
 - **No state transition**
@@ -417,11 +437,12 @@ There is:
 
 ### UCB 1 algorithm
 The UCB1 algorithm selects the action 'Aₜ' a that maximizes the sum of its estimated value and an exploration bonus:
-```text
-Aₜ = arg maxₐ Q(a) + √(-log p/ 2Nₜ(a))
-
-where Uₜ = √(-log p/ 2Nₜ(a)) (This is obtaned by Hoeffding's inequality')
+```math
+A_t = arg max_a Q(a) + \sqrt{-log p/ 2N_t(a)}
+\text{  where  } Uₜ = \sqrt{-log p/ 2Nₜ(a)}
 ```
+> This is obtaned by Hoeffding's inequality
+
 ## Week 4
 ### Implementing Q-Learning using Pytorch / Tensorflow
 Pytorch and Tensorflow are two python modules which is widely used to implement deep-learning framework. These modules provide robust tools for learning methods for implementing learning methods. Using PyTorch, we gain full control over the learning process due to its dynamic computation graph and intuitive debugging capabilities. In contrast, TensorFlow—particularly in its high-level APIs like Keras—offers a more abstracted interface, which simplifies implementation but provides comparatively less flexibility for low-level customization. So pytorch is suitable if you want full control over the learnng framework and tensorflow if you want basic learning models. 
@@ -449,11 +470,36 @@ As part of the assignment created a Deep Q learning framework using pytorch for 
 TRPO is a policy gradient RL method. Here we uses neural network to determine the policy.
 The algorithm is:
  - We will define a neural network whose input layer is the observation space and there is 2 output layer (which we make parallel), one of them gives the value functions and other gives the mean of policies at that state. (We must have already defined standard deviation as a hyperparameter of this neural network, so it will update during training)
-```Assumption: Policy is a normal distribution with this mean and variance```
+>Assumption: Policy is a normal distribution with this mean and variance
+>π(a|s) ~ N(μ(s), σ²)
  - We would take a sample from this distribution and play that action. The outputa are stored in a buffer and a set of this goes to neural network to train(like DQN)
  - The loss function here is
-    *  
+```math
+  L = r_t \times A_t \quad \text{where,  } r_t = \frac{\pi_{new}(a_t|s_t)}{\pi_{old}(a_t|s_t)} \quad  \text{ Subject to the constraint   } \mathbb{E}_t [ KL[ π_{θ_{old}}(·|s_t) || π_{θ_{new}}(·|s_t) ] ] ≤ \delta
+```
+> KL divergence of two normal distributions is defined as:
+```math
+D_{\text{KL}}\left( \mathcal{N}_{\text{old}} \,||\, \mathcal{N}_{\text{new}} \right) = \sum_{i=1}^d \left[\log \left( \frac{\sigma_{\text{new},i}}{\sigma_{\text{old},i}} \right) + \frac{\sigma_{\text{old},i}^2 + \left( \mu_{\text{old},i} - \mu_{\text{new},i} \right)^2}{2 \sigma_{\text{new},i}^2}- \frac{1}{2} \right]
+```
 #### 2. Proximal Policy Optimization (PPO)
+PPO is also a policy gradient RL method like TRPO. It was made to simplify the policy gradient RL method. In TRPO, we're maximizing based on a constraint and in PPO we could clip the loss and reduce computation. The algorithm is similar except the loss function. We will define ε and clip r_t between 1-ε and 1+ε. So now new policy does not deviate too much from old policy. Mathematically
+```math
+L = r_t \times A_t \quad \text{where,  } r_t = clip(1 - \epsilon, \frac{\pi_{new}(a_t|s_t)}{\pi_{old}(a_t|s_t)}, 1+ \epsilon)
+```
+
+```math
+A_t \text{ in both PPO and TRPO is the advantage function it tells about how much advantage it is to perform that particualr action in this state.}
+```
+```math
+\text{In practice, especially in PPO and TRPO, it is often estimated using Generalized Advantage Estimation (GAE), where }
+```
+```math
+A_t = \delta_t + (\gamma \lambda) \delta_{t+1} + (\gamma \lambda)^2 \delta_{t+2} + \dots,
+```
+```math
+ \text{with } \quad \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)
+```
+## Week 7 and Week 8
 
 
 
