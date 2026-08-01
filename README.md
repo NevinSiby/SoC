@@ -71,9 +71,9 @@ In a linear neural network, each neuron performs a weighted sum of its inputs an
 ```math
 a = w \cdot x + b
 ```
-- a: input vector (previous layer)
+- a: output vector (previous layer)
 - w: weight matrix
-- x: output vector (this is the current layer)
+- x: input vector (this is the current layer)
 - b: bias vector
 By this each layer is connected to its previous layer.
 
