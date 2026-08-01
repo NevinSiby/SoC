@@ -93,7 +93,7 @@ If no activation functions are used between layers, then composing multiple laye
 #### Cost Function
 Cost is sum of square of difference between required output and output our neural network give. This is used in learning. Cost function should be minimised for an accurate neural network.
 #### Backtracking
-We find the gradient of Codt function with respect to w and b and subtract w and b by learning rate ∙ (- grad). By this, the cost function decreases over and over while we inputting test dataset. This is called **backtracking** because we're moving backwards as we find the output first and then readjust the weights and biases.
+We find the gradient of Cost function with respect to w and b and subtract w and b by learning rate ∙ (- grad). By this, the cost function decreases over and over while we inputting test dataset. This is called **backtracking** because we're moving backwards as we find the output first and then readjust the weights and biases.
 
 ```math
 w \leftarrow w − \alpha \cdot \frac{\partial C}{\partial w}
